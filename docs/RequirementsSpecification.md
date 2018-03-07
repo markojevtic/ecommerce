@@ -25,8 +25,14 @@ As it's mentioned above we should allow manipulation with following entity data
 * customerId
 * name
 * address
-* contact persons
-* billing addresses
+* contacts(List)
+    * name
+    * email
+    * phone
+* billing addresses(List)
+    * City
+    * Zip
+    * address(street&number)
 * cost center
 * active (true/false)
 
@@ -34,7 +40,10 @@ As it's mentioned above we should allow manipulation with following entity data
 * costCenterId
 * name
 * address
-* contact persons
+* contacts(List)
+      * name
+      * email
+      * phone
 
 ##### Category
 * categoryId
@@ -45,6 +54,7 @@ As it's mentioned above we should allow manipulation with following entity data
 * name
 * description
 * photoUrl
+* category
 * active (true/false)
 
 ##### Order
@@ -52,7 +62,7 @@ As it's mentioned above we should allow manipulation with following entity data
 * orderDate
 * customer
 * status( new, accepted, dismissed, ordered, delivered )
-* OrderDetails
+* orderDetails(List)
     * ordinal
     * product
     * price

@@ -51,6 +51,14 @@ As it's mentioned above we should allow manipulation with following entity data
 * orderId
 * orderDate
 * customer
-* status( new, accepted, ordered, delivered )
-
+* status( new, accepted, dismissed, ordered, delivered )
+* OrderDetails
+    * ordinal
+    * product
+    * price
+    * quantity
+    * amount
+    
+##### ShopCart
+TBD    
 

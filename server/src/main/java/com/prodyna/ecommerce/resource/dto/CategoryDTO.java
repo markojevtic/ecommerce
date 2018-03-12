@@ -15,4 +15,5 @@ public class CategoryDTO {
 
 	private String categoryId;
 	private String name;
+
 }

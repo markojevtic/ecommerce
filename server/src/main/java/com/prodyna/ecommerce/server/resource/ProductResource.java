@@ -42,9 +42,10 @@ public class ProductResource {
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
-    public void delete(final @PathVariable("productId") String productId) {
+    public ResponseEntity delete(final @PathVariable("productId") String productId) {
 
-        this.productService.delete(productId);
+        final ProductDto productDto = this.productService.delete(productId);
+        return ResponseEntity.ok(productDto);
     }
 
     @RequestMapping(method = RequestMethod.GET)

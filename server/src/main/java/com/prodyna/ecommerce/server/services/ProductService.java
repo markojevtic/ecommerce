@@ -10,8 +10,12 @@ import java.util.List;
 public interface ProductService {
 
     ProductDto load(final String productId);
+
     ProductDto insert(final Product product);
+
     ProductDto update(final Product product);
-    void delete(final String productId);
+
+    ProductDto delete(final String productId);
+
     List<ProductDto> getAll();
 }

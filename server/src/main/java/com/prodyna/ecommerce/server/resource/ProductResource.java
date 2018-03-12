@@ -1,39 +1,50 @@
 package com.prodyna.ecommerce.server.resource;
 
 import com.prodyna.ecommerce.server.repository.entity.Product;
+import com.prodyna.ecommerce.server.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/products")
 public class ProductResource {
 
-    @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
-    public Product load(@PathVariable("productId") String productId) {
+    private final ProductService productService;
 
-        return null;
+    @Autowired
+    public ProductResource(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
+    public Product load(final @PathVariable("productId") String productId) {
+
+        return this.productService.load(productId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Product insert(@RequestBody Product product) {
+    public Product insert(final @RequestBody Product product) {
 
-        return null;
+        return this.productService.insert(product);
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
-    public Product update(@PathVariable("productId") String productId, @RequestBody Product product) {
+    public Product update(final @PathVariable("productId") String productId, final @RequestBody Product product) {
 
-        return null;
+        return this.productService.update(product);
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
-    public Product delete(@PathVariable("productId") String productId) {
+    public void delete(final @PathVariable("productId") String productId) {
 
-        return null;
+        this.productService.delete(productId);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Product getAll() {
+    public List<Product> getAll() {
 
-        return null;
+        return this.productService.getAll();
     }
 }

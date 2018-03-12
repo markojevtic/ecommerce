@@ -1,5 +1,7 @@
-package com.prodyna.ecommerce.server.repository.entity;
+package com.prodyna.ecommerce.server.resource.dto;
 
+import com.prodyna.ecommerce.server.repository.entity.Address;
+import com.prodyna.ecommerce.server.repository.entity.Contact;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CostCenter {
+public class CostCenterDto {
     private String costCenterId;
     private String name;
     private Address address;

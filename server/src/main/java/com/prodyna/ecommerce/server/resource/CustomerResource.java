@@ -24,7 +24,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RequestMapping(value = "/customers", produces = APPLICATION_JSON_UTF8_VALUE)
 public class CustomerResource {
 
-    @Autowired
+    @Autowired(required = false)
     private CustomerService customerService;
 
     @Autowired
@@ -41,7 +41,6 @@ public class CustomerResource {
     @RequestMapping(method = GET, path = "/{id}")
     public ResponseEntity<CustomerDto> load(@PathVariable String id) {
         Customer customer = customerService.load(id);
-
         CustomerDto customerDto = conversionService.convert(customer, CustomerDto.class);
 
         return ResponseEntity.ok(customerDto);

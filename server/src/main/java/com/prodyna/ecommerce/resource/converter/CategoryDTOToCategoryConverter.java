@@ -9,7 +9,10 @@ public class CategoryDTOToCategoryConverter implements Converter<CategoryDTO, Ca
 
 	@Override
 	public Category convert(CategoryDTO categoryDTO) {
-		return Category.builder().categoryId(categoryDTO.getCategoryId()).name(categoryDTO.getName()).build();
+		return Category.builder()
+				.categoryId( categoryDTO.getCategoryId() )
+				.name( categoryDTO.getName()) 
+				.build();
 	}
 
 }

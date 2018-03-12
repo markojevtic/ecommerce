@@ -53,8 +53,8 @@ public class CategoryResource {
 	}
 
 	@RequestMapping(method = GET, path = "/{id}")
-	public ResponseEntity<CategoryDTO> get(@PathVariable String categoryId) {
-		Category category = categoryService.load(categoryId);
+	public ResponseEntity<CategoryDTO> get(@PathVariable String id) {
+		Category category = categoryService.load(id);
 		CategoryDTO categoryDTO = conversionService.convert(category, CategoryDTO.class);
 
 		return ResponseEntity.ok(categoryDTO);
@@ -77,8 +77,8 @@ public class CategoryResource {
 	}
 
 	@RequestMapping(method = DELETE, path = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable String categoryId) {
-		categoryService.delete(categoryId);
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+		categoryService.delete(id);
 
 		return ResponseEntity.noContent().build();
 	}

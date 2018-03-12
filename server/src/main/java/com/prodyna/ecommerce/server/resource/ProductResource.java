@@ -1,8 +1,10 @@
 package com.prodyna.ecommerce.server.resource;
 
 import com.prodyna.ecommerce.server.repository.entity.Product;
+import com.prodyna.ecommerce.server.resource.dto.ProductDto;
 import com.prodyna.ecommerce.server.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,21 +21,24 @@ public class ProductResource {
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
-    public Product load(final @PathVariable("productId") String productId) {
+    public ResponseEntity<ProductDto> load(final @PathVariable("productId") String productId) {
 
-        return this.productService.load(productId);
+        final ProductDto productDto = this.productService.load(productId);
+        return ResponseEntity.ok(productDto);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Product insert(final @RequestBody Product product) {
+    public ResponseEntity<ProductDto> insert(final @RequestBody Product product) {
 
-        return this.productService.insert(product);
+        final ProductDto productDto = this.productService.insert(product);
+        return ResponseEntity.ok(productDto);
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
-    public Product update(final @PathVariable("productId") String productId, final @RequestBody Product product) {
+    public ResponseEntity<ProductDto> update(final @RequestBody Product product) {
 
-        return this.productService.update(product);
+        final ProductDto productDto = this.productService.update(product);
+        return ResponseEntity.ok(productDto);
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
@@ -43,8 +48,9 @@ public class ProductResource {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Product> getAll() {
+    public ResponseEntity<List<ProductDto>> getAll() {
 
-        return this.productService.getAll();
+        final List<ProductDto> productDtoList = this.productService.getAll();
+        return ResponseEntity.ok(productDtoList);
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Customer {
-    private long customerId;
+    private String customerId;
     private String name;
     private List<Contact> contacts;
     private Address address;

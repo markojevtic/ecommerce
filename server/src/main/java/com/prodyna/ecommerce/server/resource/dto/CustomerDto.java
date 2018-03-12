@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerDto extends ResourceSupport {
-    private long customerId;
+    private String customerId;
     private String name;
     private List<Contact> contacts;
     private Address address;

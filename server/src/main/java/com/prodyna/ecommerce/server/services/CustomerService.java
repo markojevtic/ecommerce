@@ -5,11 +5,13 @@ import com.prodyna.ecommerce.server.repository.entity.Customer;
 import java.util.List;
 
 public interface CustomerService {
-    Customer get(Long id);
+    Customer load(String id);
 
     List<Customer> getAll();
 
-    void delete(Long id);
+    void delete(String id);
 
-    Customer save(Customer customer);
+    Customer insert(Customer customer);
+
+    Customer update(Customer customer);
 }

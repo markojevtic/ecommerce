@@ -24,7 +24,6 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -34,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 public class CustomerResourceSpringTest {
 
-    private final static Long TEST_ID = 22l;
+    private final static String TEST_ID = "22";
     private final static Customer TEST_CUSTOMER = Customer.builder().customerId(TEST_ID).active(true).name("Test customer").build();
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -55,10 +54,10 @@ public class CustomerResourceSpringTest {
     }
 
     @Test
-    public void getCustomerReturnsProperResourceAndStatusOk() throws Exception {
+    public void loadCustomerReturnsProperResourceAndStatusOk() throws Exception {
         doReturn(TEST_CUSTOMER)
                 .when(customerService)
-                .get(anyLong());
+                .load(anyString());
 
         mockMvc.perform(get(CustomerResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerId").value(TEST_ID))
@@ -67,10 +66,10 @@ public class CustomerResourceSpringTest {
     }
 
     @Test
-    public void getCustomerReturnsNotFoundStatusOnServiceEntityNotFoundException() throws Exception {
+    public void loadCustomerReturnsNotFoundStatusOnServiceEntityNotFoundException() throws Exception {
         doThrow(EntityNotFoundException.class)
                 .when(customerService)
-                .get(anyLong());
+                .load(anyString());
 
         mockMvc.perform(get(CustomerResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNotFound());
     }
@@ -96,10 +95,10 @@ public class CustomerResourceSpringTest {
     }
 
     @Test
-    public void saveReturnsProperResourceAndStatusIsOk() throws Exception {
+    public void insertReturnsProperResourceAndStatusIsOk() throws Exception {
         doReturn(TEST_CUSTOMER)
                 .when(customerService)
-                .save(any(Customer.class));
+                .insert(any(Customer.class));
 
         mockMvc.perform(post(CustomerResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -111,7 +110,22 @@ public class CustomerResourceSpringTest {
     }
 
     @Test
-    public void conversionServisIsAvailableAndConvertsEntitityToDto() {
+    public void updateReturnsProperResourceAndStatusIsOk() throws Exception {
+        doReturn(TEST_CUSTOMER)
+                .when(customerService)
+                .update(any(Customer.class));
+
+        mockMvc.perform(post(CustomerResource.createLink().toString() + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(mapper.writeValueAsString(TEST_CUSTOMER)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.customerId").value(TEST_ID))
+                .andExpect(jsonPath("$.active").value(TEST_CUSTOMER.isActive()))
+                .andExpect(jsonPath("$.name").value(TEST_CUSTOMER.getName()));
+    }
+
+    @Test
+    public void conversionServiceIsAvailableAndConvertsEntityToDto() {
         assertThat(conversionService).isNotNull();
         assertThat(conversionService.canConvert(Customer.class, CustomerDto.class)).isTrue();
     }
@@ -119,7 +133,7 @@ public class CustomerResourceSpringTest {
     @Test
     public void resourceLinkAndResourceSingleLinkAreCreated() {
         Link resourcesLink = CustomerResource.createLink().withSelfRel();
-        Link singleResourceLink = CustomerResource.createSingleLink(13L).withSelfRel();
+        Link singleResourceLink = CustomerResource.createSingleLink("13").withSelfRel();
         assertThat(resourcesLink.getHref()).endsWith("/customers");
         assertThat(singleResourceLink.getHref()).endsWith("/customers/13");
     }

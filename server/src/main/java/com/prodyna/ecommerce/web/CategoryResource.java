@@ -23,7 +23,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import org.springframework.http.ResponseEntity;
 
 @RestController
-@RequestMapping(value = "/category", produces = APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/categories", produces = APPLICATION_JSON_UTF8_VALUE)
 public class CategoryResource {
 
 	@Autowired

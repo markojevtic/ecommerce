@@ -53,8 +53,8 @@ public class CategoryResource {
 	}
 
 	@RequestMapping(method = GET, path = "/{id}")
-	public ResponseEntity<CategoryDTO> get(@PathVariable String id) {
-		Category category = categoryService.load(id);
+	public ResponseEntity<CategoryDTO> get(@PathVariable String categoryId) {
+		Category category = categoryService.load(categoryId);
 		CategoryDTO categoryDTO = conversionService.convert(category, CategoryDTO.class);
 
 		return ResponseEntity.ok(categoryDTO);

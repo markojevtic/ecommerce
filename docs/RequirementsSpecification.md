@@ -24,16 +24,16 @@ As it's mentioned above we should allow manipulation with following entity data
 ##### Customer 
 * customerId
 * name
-* address
 * contacts(List)
     * name
     * email
     * phone
-* billing addresses(List)
+* address (Address)
     * City
     * Zip
     * address(street&number)
-* cost center
+* billing address( Address )
+* cost center (CostCenter)
 * active (true/false)
 
 ##### CostCenter

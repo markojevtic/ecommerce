@@ -29,7 +29,7 @@ public class ProductResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ProductDto> insert(final @RequestBody Product product) throws ProductNotFoundException {
+    public ResponseEntity<ProductDto> insert(final @RequestBody Product product) {
 
         final ProductDto productDto = this.productService.insert(product);
         return ResponseEntity.ok(productDto);

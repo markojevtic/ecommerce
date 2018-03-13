@@ -61,7 +61,7 @@ public class CustomerResourceSpringTest {
 
         mockMvc.perform(get(CustomerResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerId").value(TEST_ID))
-                .andExpect(jsonPath("$.active").value(TEST_CUSTOMER.isActive()))
+                .andExpect(jsonPath("$.active").value(TEST_CUSTOMER.getActive()))
                 .andExpect(jsonPath("$.name").value(TEST_CUSTOMER.getName()));
     }
 
@@ -83,7 +83,7 @@ public class CustomerResourceSpringTest {
         mockMvc.perform(get(CustomerResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").exists())
                 .andExpect(jsonPath("$[0].customerId").value(TEST_ID))
-                .andExpect(jsonPath("$[0].active").value(TEST_CUSTOMER.isActive()))
+                .andExpect(jsonPath("$[0].active").value(TEST_CUSTOMER.getActive()))
                 .andExpect(jsonPath("$[0].name").value(TEST_CUSTOMER.getName()));
     }
 
@@ -105,7 +105,7 @@ public class CustomerResourceSpringTest {
                 .content(mapper.writeValueAsString(TEST_CUSTOMER)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerId").value(TEST_ID))
-                .andExpect(jsonPath("$.active").value(TEST_CUSTOMER.isActive()))
+                .andExpect(jsonPath("$.active").value(TEST_CUSTOMER.getActive()))
                 .andExpect(jsonPath("$.name").value(TEST_CUSTOMER.getName()));
     }
 
@@ -120,7 +120,7 @@ public class CustomerResourceSpringTest {
                 .content(mapper.writeValueAsString(TEST_CUSTOMER)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerId").value(TEST_ID))
-                .andExpect(jsonPath("$.active").value(TEST_CUSTOMER.isActive()))
+                .andExpect(jsonPath("$.active").value(TEST_CUSTOMER.getActive()))
                 .andExpect(jsonPath("$.name").value(TEST_CUSTOMER.getName()));
     }
 

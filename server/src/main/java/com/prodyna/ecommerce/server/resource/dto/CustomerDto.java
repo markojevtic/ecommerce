@@ -20,5 +20,5 @@ public class CustomerDto extends ResourceSupport {
     private Address address;
     private Address billingAddresses;
     private CostCenter costCenter;
-    private boolean active;
+    private Boolean active;
 }

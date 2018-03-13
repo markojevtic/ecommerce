@@ -12,7 +12,7 @@ public class CustomerDtoToCustomerConverter implements Converter<CustomerDto, Cu
     public Customer convert(CustomerDto customer) {
         return Customer.builder()
                 .customerId(customer.getCustomerId())
-                .active(customer.isActive())
+                .active(customer.getActive())
                 .address(customer.getAddress())
                 .billingAddresses(customer.getBillingAddresses())
                 .costCenter(customer.getCostCenter())

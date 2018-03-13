@@ -1,5 +1,6 @@
 package com.prodyna.ecommerce.server.resource;
 
+import com.prodyna.ecommerce.server.exception.ProductNotFoundException;
 import com.prodyna.ecommerce.server.repository.entity.Product;
 import com.prodyna.ecommerce.server.resource.dto.ProductDto;
 import com.prodyna.ecommerce.server.services.ProductService;
@@ -21,35 +22,35 @@ public class ProductResource {
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
-    public ResponseEntity<ProductDto> load(final @PathVariable("productId") String productId) {
+    public ResponseEntity<ProductDto> load(final @PathVariable("productId") String productId) throws ProductNotFoundException {
 
         final ProductDto productDto = this.productService.load(productId);
         return ResponseEntity.ok(productDto);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ProductDto> insert(final @RequestBody Product product) {
+    public ResponseEntity<ProductDto> insert(final @RequestBody Product product) throws ProductNotFoundException {
 
         final ProductDto productDto = this.productService.insert(product);
         return ResponseEntity.ok(productDto);
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.PUT)
-    public ResponseEntity<ProductDto> update(final @RequestBody Product product) {
+    public ResponseEntity<ProductDto> update(final @RequestBody Product product) throws ProductNotFoundException {
 
         final ProductDto productDto = this.productService.update(product);
         return ResponseEntity.ok(productDto);
     }
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
-    public ResponseEntity delete(final @PathVariable("productId") String productId) {
+    public ResponseEntity delete(final @PathVariable("productId") String productId) throws ProductNotFoundException {
 
         final ProductDto productDto = this.productService.delete(productId);
         return ResponseEntity.ok(productDto);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<ProductDto>> getAll() {
+    public ResponseEntity<List<ProductDto>> getAll() throws ProductNotFoundException {
 
         final List<ProductDto> productDtoList = this.productService.getAll();
         return ResponseEntity.ok(productDtoList);

@@ -13,6 +13,7 @@ import com.prodyna.ecommerce.services.CategoryService;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
@@ -54,7 +55,7 @@ public class CategoryResource {
 
 	@RequestMapping(method = GET, path = "/{id}")
 	public ResponseEntity<CategoryDTO> get(@PathVariable String id) {
-		Category category = categoryService.load(id);
+		Optional<Category> category = categoryService.load(id);
 		CategoryDTO categoryDTO = conversionService.convert(category, CategoryDTO.class);
 
 		return ResponseEntity.ok(categoryDTO);

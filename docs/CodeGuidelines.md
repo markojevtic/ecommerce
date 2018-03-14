@@ -37,4 +37,4 @@ But here are a few advices:
 * write comment only if it's needed, try to avoid dummy comments
     * i.e. `String lastName; //The last name`.
 * test method should be named by case, and should test only one case.
-* Just write clean code ;)     
+* Just write clean code ;)

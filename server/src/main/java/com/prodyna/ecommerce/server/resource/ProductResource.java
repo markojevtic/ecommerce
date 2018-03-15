@@ -1,10 +1,7 @@
 package com.prodyna.ecommerce.server.resource;
 
-import com.prodyna.ecommerce.server.repository.entity.Category;
-import com.prodyna.ecommerce.server.repository.entity.Customer;
+import com.prodyna.ecommerce.server.exception.EntityNotFoundException;
 import com.prodyna.ecommerce.server.repository.entity.Product;
-import com.prodyna.ecommerce.server.resource.dto.CategoryDto;
-import com.prodyna.ecommerce.server.resource.dto.CustomerDto;
 import com.prodyna.ecommerce.server.resource.dto.ProductDto;
 import com.prodyna.ecommerce.server.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +19,21 @@ import java.util.List;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 @RequestMapping(value = "/products", produces = APPLICATION_JSON_UTF8_VALUE)
 public class ProductResource {
 
-    @Autowired(required = false)
-    private ProductService productService;
+    private final ProductService productService;
+
+    private final ConversionService conversionService;
 
     @Autowired
-    private ConversionService conversionService;
+    public ProductResource(ProductService productService, ConversionService conversionService) {
+        this.productService = productService;
+        this.conversionService = conversionService;
+    }
 
     public static final ControllerLinkBuilder createLink() {
         return linkTo(ProductResource.class);
@@ -46,8 +45,8 @@ public class ProductResource {
 
     @RequestMapping(method = GET, path = "/{id}")
     public ResponseEntity<ProductDto> load(@PathVariable String id) {
-        Product product = productService.load(id);
-        ProductDto productDto = conversionService.convert(product, ProductDto.class);
+        final Product product = this.productService.load(id);
+        final ProductDto productDto = conversionService.convert(product, ProductDto.class);
 
         return ResponseEntity.ok(productDto);
     }
@@ -66,8 +65,8 @@ public class ProductResource {
 
     @RequestMapping(method = POST)
     public ResponseEntity<ProductDto> insert(@RequestBody ProductDto productDto) {
-        Product product = conversionService.convert(productDto, Product.class);
-        Product insertedProduct = productService.insert(product);
+        final Product product = conversionService.convert(productDto, Product.class);
+        final Product insertedProduct = productService.insert(product);
 
         return ResponseEntity.ok(conversionService.convert(insertedProduct, ProductDto.class));
     }

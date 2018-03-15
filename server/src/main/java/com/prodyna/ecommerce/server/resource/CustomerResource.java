@@ -34,7 +34,7 @@ public class CustomerResource {
         return linkTo(CustomerResource.class);
     }
 
-    public static final ControllerLinkBuilder createSingleLink(String id) {
+    public static final ControllerLinkBuilder createSingleResourceLink(String id) {
         return linkTo(methodOn(CustomerResource.class).load(id));
     }
 
@@ -42,6 +42,9 @@ public class CustomerResource {
     public ResponseEntity<CustomerDto> load(@PathVariable String id) {
         Customer customer = customerService.load(id);
         CustomerDto customerDto = conversionService.convert(customer, CustomerDto.class);
+
+        customerDto.add(createSingleResourceLink(customerDto.getCustomerId()).withSelfRel());
+        customerDto.add(OrderResource.createCustomerOrdersLink(id).withRel("orders"));
 
         return ResponseEntity.ok(customerDto);
     }

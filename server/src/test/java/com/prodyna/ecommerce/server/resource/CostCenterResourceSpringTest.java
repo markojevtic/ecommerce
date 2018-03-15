@@ -3,7 +3,10 @@ package com.prodyna.ecommerce.server.resource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.ecommerce.server.exception.EntityNotFoundException;
 import com.prodyna.ecommerce.server.repository.entity.Address;
+import com.prodyna.ecommerce.server.repository.entity.Contact;
 import com.prodyna.ecommerce.server.repository.entity.CostCenter;
+import com.prodyna.ecommerce.server.resource.dto.AddressDto;
+import com.prodyna.ecommerce.server.resource.dto.ContactDto;
 import com.prodyna.ecommerce.server.resource.dto.CostCenterDto;
 import com.prodyna.ecommerce.server.services.CostCenterService;
 import org.junit.Before;
@@ -88,7 +91,10 @@ public class CostCenterResourceSpringTest {
                 .andExpect(jsonPath("$[0]").exists())
                 .andExpect(jsonPath("$[0].costCenterId").value(TEST_ID))
                 .andExpect(jsonPath("$[0].name").value(TEST_COST_CENTER.getName()))
-                .andExpect(jsonPath("$[0].address").value(TEST_COST_CENTER.getAddress()));
+                .andExpect(jsonPath("$[0].address").exists())
+                .andExpect(jsonPath("$[0].address.zip").value(TEST_ADDRESS.getZip()))
+                .andExpect(jsonPath("$[0].address.city").value(TEST_ADDRESS.getCity()))
+                .andExpect(jsonPath("$[0].address.streetAndNumber").value(TEST_ADDRESS.getStreetAndNumber()) );;
     }
 
     @Test
@@ -131,6 +137,8 @@ public class CostCenterResourceSpringTest {
     @Test
     public void conversionServiceIsAvailableAndConvertsEntityToDto() {
         assertThat(conversionService).isNotNull();
+        assertThat(conversionService.canConvert(Address.class, AddressDto.class)).isTrue();
+        assertThat(conversionService.canConvert(Contact.class, ContactDto.class)).isTrue();
         assertThat(conversionService.canConvert(CostCenter.class, CostCenterDto.class)).isTrue();
     }
 

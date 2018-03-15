@@ -1,11 +1,10 @@
 package com.prodyna.ecommerce.server.resource.dto;
 
-import com.prodyna.ecommerce.server.repository.entity.Address;
-import com.prodyna.ecommerce.server.repository.entity.Contact;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.util.List;
 
@@ -13,9 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CostCenterDto {
+public class CostCenterDto extends ResourceSupport {
     private String costCenterId;
     private String name;
-    private Address address;
-    private List<Contact> contactList;
+    private AddressDto address;
+    private List<ContactDto> contactList;
 }

@@ -10,7 +10,8 @@ import org.springframework.hateoas.ResourceSupport;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDto extends ResourceSupport {
-    String categoryId;
-    String name;
+public class AddressDto extends ResourceSupport {
+    private String city;
+    private String zip;
+    private String streetAndNumber;
 }

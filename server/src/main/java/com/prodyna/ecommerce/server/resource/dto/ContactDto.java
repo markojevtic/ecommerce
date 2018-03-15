@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.hateoas.ResourceSupport;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class CategoryDto extends ResourceSupport {
-    String categoryId;
-    String name;
+public class ContactDto extends ResourceSupport {
+    private String name;
+    private String email;
+    private String phone;
 }

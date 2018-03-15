@@ -97,8 +97,9 @@ public class ProductResourceSpringTest {
                 .andExpect(jsonPath("$[0].name").value(TEST_PRODUCT.getName()))
                 .andExpect(jsonPath("$[0].description").value(TEST_PRODUCT.getDescription()))
                 .andExpect(jsonPath("$[0].photoUrl").value(TEST_PRODUCT.getPhotoUrl()))
-                .andExpect(jsonPath("$[0].category").value(TEST_PRODUCT.getCategory()))
-                .andExpect(jsonPath("$[0].active").value(TEST_PRODUCT.getActive()));
+                .andExpect(jsonPath("$[0].active").value(TEST_PRODUCT.getActive()))
+                .andExpect(jsonPath("$[0].category.name").value(TEST_PRODUCT.getCategory().getName()))
+                .andExpect(jsonPath("$[0].category.categoryId").value(TEST_PRODUCT.getCategory().getCategoryId()));
     }
 
     @Test

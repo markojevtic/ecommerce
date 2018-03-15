@@ -61,7 +61,7 @@ As it's mentioned above we should allow manipulation with following entity data
 * orderId
 * orderDate
 * customer
-* status( new, accepted, dismissed, ordered, delivered )
+* orderStatus( new, accepted, dismissed, ordered, delivered )
 * orderDetails(List)
     * ordinal
     * product

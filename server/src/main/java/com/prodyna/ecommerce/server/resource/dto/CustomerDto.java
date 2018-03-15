@@ -16,9 +16,9 @@ import java.util.List;
 public class CustomerDto extends ResourceSupport {
     private String customerId;
     private String name;
-    private List<Contact> contacts;
-    private Address address;
-    private Address billingAddresses;
-    private CostCenter costCenter;
+    private List<ContactDto> contacts;
+    private AddressDto address;
+    private AddressDto billingAddresses;
+    private CostCenterDto costCenter;
     private Boolean active;
 }

@@ -75,7 +75,7 @@ public class OrderResourceSpringTest {
                 .when(orderService)
                 .load(anyString());
 
-        mockMvc.perform(get(OrderResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
+        mockMvc.perform(get(OrderResource.createResourceSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.orderId").value(TEST_ID))
                 .andExpect(jsonPath("$.customer.customerId").value(TEST_ORDER.getCustomer().getCustomerId()))
@@ -94,7 +94,7 @@ public class OrderResourceSpringTest {
                 .when(orderService)
                 .load(anyString());
 
-        mockMvc.perform(get(OrderResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
+        mockMvc.perform(get(OrderResource.createResourceSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound());
     }
 
@@ -104,7 +104,7 @@ public class OrderResourceSpringTest {
                 .when(orderService)
                 .getAll();
 
-        mockMvc.perform(get(OrderResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8))
+        mockMvc.perform(get(OrderResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").exists())
                 .andExpect(jsonPath("$[0].orderId").value(TEST_ID))
@@ -120,7 +120,7 @@ public class OrderResourceSpringTest {
 
     @Test
     public void deletePerformsProperActionAndStatusIsNoContent() throws Exception {
-        mockMvc.perform(delete(OrderResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
+        mockMvc.perform(delete(OrderResource.createResourceSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
 
         verify(orderService, times(1)).delete(eq(TEST_ID));
@@ -132,7 +132,7 @@ public class OrderResourceSpringTest {
                 .when(orderService)
                 .insert(any(Order.class));
 
-        mockMvc.perform(post(OrderResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(OrderResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_ORDER)))
                 .andExpect(status().isOk())
@@ -153,7 +153,7 @@ public class OrderResourceSpringTest {
                 .when(orderService)
                 .update(any(Order.class));
 
-        mockMvc.perform(post(OrderResource.createLink().toString()  + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(OrderResource.createResourceLink().toString()  + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_ORDER)))
                 .andExpect(status().isOk())
@@ -182,8 +182,8 @@ public class OrderResourceSpringTest {
 
     @Test
     public void resourceLinkAndResourceSingleLinkAreCreated() {
-        Link resourcesLink = OrderResource.createLink().withSelfRel();
-        Link singleResourceLink = OrderResource.createSingleLink("13").withSelfRel();
+        Link resourcesLink = OrderResource.createResourceLink().withSelfRel();
+        Link singleResourceLink = OrderResource.createResourceSingleLink("13").withSelfRel();
         assertThat(resourcesLink.getHref()).endsWith("/orders");
         assertThat(singleResourceLink.getHref()).endsWith("/orders/13");
     }

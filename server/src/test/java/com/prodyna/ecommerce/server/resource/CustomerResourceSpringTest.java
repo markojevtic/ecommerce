@@ -80,7 +80,7 @@ public class CustomerResourceSpringTest {
                 .when(customerService)
                 .getAll();
 
-        mockMvc.perform(get(CustomerResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
+        mockMvc.perform(get(CustomerResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").exists())
                 .andExpect(jsonPath("$[0].customerId").value(TEST_ID))
                 .andExpect(jsonPath("$[0].active").value(TEST_CUSTOMER.getActive()))
@@ -100,7 +100,7 @@ public class CustomerResourceSpringTest {
                 .when(customerService)
                 .insert(any(Customer.class));
 
-        mockMvc.perform(post(CustomerResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(CustomerResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_CUSTOMER)))
                 .andExpect(status().isOk())
@@ -115,7 +115,7 @@ public class CustomerResourceSpringTest {
                 .when(customerService)
                 .update(any(Customer.class));
 
-        mockMvc.perform(post(CustomerResource.createLink().toString() + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(CustomerResource.createResourceLink().toString() + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_CUSTOMER)))
                 .andExpect(status().isOk())
@@ -132,7 +132,7 @@ public class CustomerResourceSpringTest {
 
     @Test
     public void resourceLinkAndResourceSingleLinkAreCreated() {
-        Link resourcesLink = CustomerResource.createLink().withSelfRel();
+        Link resourcesLink = CustomerResource.createResourceLink().withSelfRel();
         Link singleResourceLink = CustomerResource.createSingleResourceLink("13").withSelfRel();
         assertThat(resourcesLink.getHref()).endsWith("/customers");
         assertThat(singleResourceLink.getHref()).endsWith("/customers/13");

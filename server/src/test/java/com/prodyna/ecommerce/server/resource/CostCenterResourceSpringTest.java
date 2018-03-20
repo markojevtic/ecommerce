@@ -66,7 +66,7 @@ public class CostCenterResourceSpringTest {
                 .when(costCenterService)
                 .load(anyString());
 
-        mockMvc.perform(get(CostCenterResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
+        mockMvc.perform(get(CostCenterResource.createSingleResourceLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.costCenterId").value(TEST_ID))
                 .andExpect(jsonPath("$.name").value(TEST_COST_CENTER.getName()))
                 .andExpect(jsonPath("$.address").value(TEST_COST_CENTER.getAddress()));
@@ -78,7 +78,7 @@ public class CostCenterResourceSpringTest {
                 .when(costCenterService)
                 .load(anyString());
 
-        mockMvc.perform(get(CostCenterResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNotFound());
+        mockMvc.perform(get(CostCenterResource.createSingleResourceLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class CostCenterResourceSpringTest {
                 .when(costCenterService)
                 .getAll();
 
-        mockMvc.perform(get(CostCenterResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
+        mockMvc.perform(get(CostCenterResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").exists())
                 .andExpect(jsonPath("$[0].costCenterId").value(TEST_ID))
                 .andExpect(jsonPath("$[0].name").value(TEST_COST_CENTER.getName()))
@@ -99,7 +99,7 @@ public class CostCenterResourceSpringTest {
 
     @Test
     public void deletePerformsProperActionAndStatusIsNoContent() throws Exception {
-        mockMvc.perform(delete(CostCenterResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNoContent());
+        mockMvc.perform(delete(CostCenterResource.createSingleResourceLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNoContent());
 
         verify(costCenterService, times(1)).delete(eq(TEST_ID));
     }
@@ -110,7 +110,7 @@ public class CostCenterResourceSpringTest {
                 .when(costCenterService)
                 .insert(any(CostCenter.class));
 
-        mockMvc.perform(post(CostCenterResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(CostCenterResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_COST_CENTER)))
                 .andExpect(status().isOk())
@@ -125,7 +125,7 @@ public class CostCenterResourceSpringTest {
                 .when(costCenterService)
                 .update(any(CostCenter.class));
 
-        mockMvc.perform(post(CostCenterResource.createLink().toString() + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(CostCenterResource.createResourceLink().toString() + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_COST_CENTER)))
                 .andExpect(status().isOk())
@@ -144,8 +144,8 @@ public class CostCenterResourceSpringTest {
 
     @Test
     public void resourceLinkAndResourceSingleLinkAreCreated() {
-        Link resourcesLink = CostCenterResource.createLink().withSelfRel();
-        Link singleResourceLink = CostCenterResource.createSingleLink("13").withSelfRel();
+        Link resourcesLink = CostCenterResource.createResourceLink().withSelfRel();
+        Link singleResourceLink = CostCenterResource.createSingleResourceLink("13").withSelfRel();
         assertThat(resourcesLink.getHref()).endsWith("/costCenters");
         assertThat(singleResourceLink.getHref()).endsWith("/costCenters/13");
     }

@@ -67,7 +67,7 @@ public class ProductResourceSpringTest {
                 .when(productService)
                 .load(anyString());
 
-        mockMvc.perform(get(ProductResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
+        mockMvc.perform(get(ProductResource.createResourceSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.productId").value(TEST_ID))
                 .andExpect(jsonPath("$.name").value(TEST_PRODUCT.getName()))
                 .andExpect(jsonPath("$.description").value(TEST_PRODUCT.getDescription()))
@@ -82,7 +82,7 @@ public class ProductResourceSpringTest {
                 .when(productService)
                 .load(anyString());
 
-        mockMvc.perform(get(ProductResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNotFound());
+        mockMvc.perform(get(ProductResource.createResourceSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNotFound());
     }
 
     @Test
@@ -91,7 +91,7 @@ public class ProductResourceSpringTest {
                 .when(productService)
                 .getAll();
 
-        mockMvc.perform(get(ProductResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
+        mockMvc.perform(get(ProductResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").exists())
                 .andExpect(jsonPath("$[0].productId").value(TEST_ID))
                 .andExpect(jsonPath("$[0].name").value(TEST_PRODUCT.getName()))
@@ -104,7 +104,7 @@ public class ProductResourceSpringTest {
 
     @Test
     public void deletePerformsProperActionAndStatusIsNoContent() throws Exception {
-        mockMvc.perform(delete(ProductResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNoContent());
+        mockMvc.perform(delete(ProductResource.createResourceSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNoContent());
 
         verify(productService, times(1)).delete(eq(TEST_ID));
     }
@@ -115,7 +115,7 @@ public class ProductResourceSpringTest {
                 .when(productService)
                 .insert(any(Product.class));
 
-        mockMvc.perform(post(ProductResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(ProductResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_PRODUCT)))
                 .andExpect(status().isOk())
@@ -133,7 +133,7 @@ public class ProductResourceSpringTest {
                 .when(productService)
                 .update(any(Product.class));
 
-        mockMvc.perform(post(ProductResource.createLink().toString() + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(ProductResource.createResourceLink().toString() + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_PRODUCT)))
                 .andExpect(status().isOk())
@@ -153,8 +153,8 @@ public class ProductResourceSpringTest {
 
     @Test
     public void resourceLinkAndResourceSingleLinkAreCreated() {
-        Link resourcesLink = ProductResource.createLink().withSelfRel();
-        Link singleResourceLink = ProductResource.createSingleLink("13").withSelfRel();
+        Link resourcesLink = ProductResource.createResourceLink().withSelfRel();
+        Link singleResourceLink = ProductResource.createResourceSingleLink("13").withSelfRel();
         assertThat(resourcesLink.getHref()).endsWith("/products");
         assertThat(singleResourceLink.getHref()).endsWith("/products/13");
     }

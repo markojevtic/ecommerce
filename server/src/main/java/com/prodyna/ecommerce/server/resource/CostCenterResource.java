@@ -30,11 +30,11 @@ public class CostCenterResource {
     @Autowired
     private ConversionService conversionService;
 
-    public static final ControllerLinkBuilder createLink() {
+    public static final ControllerLinkBuilder createResourceLink() {
         return linkTo(CostCenterResource.class);
     }
 
-    public static final ControllerLinkBuilder createSingleLink(String id) {
+    public static final ControllerLinkBuilder createSingleResourceLink(String id) {
         return linkTo(methodOn(CostCenterResource.class).load(id));
     }
 

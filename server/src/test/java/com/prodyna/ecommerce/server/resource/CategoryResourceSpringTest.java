@@ -3,9 +3,7 @@ package com.prodyna.ecommerce.server.resource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.ecommerce.server.exception.EntityNotFoundException;
 import com.prodyna.ecommerce.server.repository.entity.Category;
-import com.prodyna.ecommerce.server.repository.entity.CostCenter;
 import com.prodyna.ecommerce.server.resource.dto.CategoryDto;
-import com.prodyna.ecommerce.server.resource.dto.CostCenterDto;
 import com.prodyna.ecommerce.server.services.CategoryService;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +64,7 @@ public class CategoryResourceSpringTest {
                 .when(categoryService)
                 .load(anyString());
 
-        mockMvc.perform(get(CategoryResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
+        mockMvc.perform(get(CategoryResource.createSingleResourceLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.categoryId").value(TEST_ID))
                 .andExpect(jsonPath("$.name").value(TEST_CATEGORY.getName()));
@@ -78,7 +76,7 @@ public class CategoryResourceSpringTest {
                 .when(categoryService)
                 .load(anyString());
 
-        mockMvc.perform(get(CategoryResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
+        mockMvc.perform(get(CategoryResource.createSingleResourceLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound());
     }
 
@@ -88,7 +86,7 @@ public class CategoryResourceSpringTest {
                 .when(categoryService)
                 .getAll();
 
-        mockMvc.perform(get(CategoryResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
+        mockMvc.perform(get(CategoryResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]").exists())
                 .andExpect(jsonPath("$[0].categoryId").value(TEST_ID))
                 .andExpect(jsonPath("$[0].name").value(TEST_CATEGORY.getName()));
@@ -96,7 +94,7 @@ public class CategoryResourceSpringTest {
 
     @Test
     public void deletePerformsProperActionAndStatusIsNoContent() throws Exception {
-        mockMvc.perform(delete(CategoryResource.createSingleLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNoContent());
+        mockMvc.perform(delete(CategoryResource.createSingleResourceLink(TEST_ID).toString()).accept(MediaType.APPLICATION_JSON_UTF8)).andExpect(status().isNoContent());
 
         verify(categoryService, times(1)).delete(eq(TEST_ID));
     }
@@ -107,7 +105,7 @@ public class CategoryResourceSpringTest {
                 .when(categoryService)
                 .insert(any(Category.class));
 
-        mockMvc.perform(post(CategoryResource.createLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(CategoryResource.createResourceLink().toString()).accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_CATEGORY)))
                 .andExpect(status().isOk())
@@ -121,7 +119,7 @@ public class CategoryResourceSpringTest {
                 .when(categoryService)
                 .update(any(Category.class));
 
-        mockMvc.perform(post(CategoryResource.createLink().toString() + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
+        mockMvc.perform(post(CategoryResource.createResourceLink().toString() + "/update").accept(MediaType.APPLICATION_JSON_UTF8)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(mapper.writeValueAsString(TEST_CATEGORY)))
                 .andExpect(status().isOk())
@@ -137,8 +135,8 @@ public class CategoryResourceSpringTest {
 
     @Test
     public void resourceLinkAndResourceSingleLinkAreCreated() {
-        Link resourcesLink = CategoryResource.createLink().withSelfRel();
-        Link singleResourceLink = CategoryResource.createSingleLink("13").withSelfRel();
+        Link resourcesLink = CategoryResource.createResourceLink().withSelfRel();
+        Link singleResourceLink = CategoryResource.createSingleResourceLink("13").withSelfRel();
         assertThat(resourcesLink.getHref()).endsWith("/categories");
         assertThat(singleResourceLink.getHref()).endsWith("/categories/13");
     }

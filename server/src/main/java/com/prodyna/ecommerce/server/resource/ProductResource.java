@@ -36,11 +36,11 @@ public class ProductResource {
     @Autowired
     private ConversionService conversionService;
 
-    public static final ControllerLinkBuilder createLink() {
+    public static final ControllerLinkBuilder createResourceLink() {
         return linkTo(ProductResource.class);
     }
 
-    public static final ControllerLinkBuilder createSingleLink(String id) {
+    public static final ControllerLinkBuilder createResourceSingleLink(String id) {
         return linkTo(methodOn(ProductResource.class).load(id));
     }
 

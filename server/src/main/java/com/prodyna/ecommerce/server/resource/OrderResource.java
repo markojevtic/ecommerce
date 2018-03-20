@@ -35,11 +35,11 @@ public class OrderResource {
     @Autowired
     private ConversionService conversionService;
 
-    public static final ControllerLinkBuilder createLink() {
+    public static final ControllerLinkBuilder createResourceLink() {
         return linkTo(OrderResource.class);
     }
 
-    public static final ControllerLinkBuilder createSingleLink(String id) {
+    public static final ControllerLinkBuilder createResourceSingleLink(String id) {
         return linkTo(methodOn(OrderResource.class).load(id));
     }
 

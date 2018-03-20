@@ -30,7 +30,7 @@ public class CustomerResource {
     @Autowired
     private ConversionService conversionService;
 
-    public static final ControllerLinkBuilder createLink() {
+    public static final ControllerLinkBuilder createResourceLink() {
         return linkTo(CustomerResource.class);
     }
 

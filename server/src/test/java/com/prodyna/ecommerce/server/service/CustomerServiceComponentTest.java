@@ -44,15 +44,15 @@ public class CustomerServiceComponentTest extends ComponentTest {
     @Autowired
     private CustomerRepository customerRepository;
 
+    // izmeni metode po uzoru na test za costcener. Treba da se oslanjas na mongo repozitorijum a ne na svoj servis
+
     @Test
     public void insertCustomerReturnsProperEntity() {
+        customerService.insert(TEST_CUSTOMER1);
+        Customer retrievedCustomer = customerRepository.findById(TEST_CUSTOMER1.getCustomerId()).orElse(null);
 
-        Customer insertedCustomer = customerService.insert(TEST_CUSTOMER1);
-        assertThat(insertedCustomer).isNotNull();
-        assertThat(insertedCustomer.getCustomerId()).isNotBlank();
-        assertThat(insertedCustomer.getCustomerId()).isEqualTo(TEST_CUSTOMER1.getCustomerId());
-        assertThat(insertedCustomer.getName()).isEqualTo(TEST_CUSTOMER1.getName());
-        assertThat(insertedCustomer.getAddress()).isEqualTo(TEST_CUSTOMER1.getAddress());
+        assertThat(retrievedCustomer).isNotNull();
+        assertThat(retrievedCustomer).isEqualTo(TEST_CUSTOMER1);
     }
 
     @Test(expected = DuplicateKeyException.class)
@@ -63,15 +63,15 @@ public class CustomerServiceComponentTest extends ComponentTest {
 
     @Test
     public void updateCustomerReturnsProperEntity() {
-        Customer customer = customerService.insert(TEST_CUSTOMER1);
-        assertThat(customer.getActive()).isNull();
+        customerService.insert(TEST_CUSTOMER1);
+        Customer retrievedCustomer = customerRepository.findById(TEST_CUSTOMER1.getCustomerId()).orElse(null);
+        assertThat(retrievedCustomer).isNotNull();
+        assertThat(retrievedCustomer.getActive()).isNull();
 
         TEST_CUSTOMER1.setActive(true);
         customerService.update(TEST_CUSTOMER1);
-        Customer updatedCustomer = customerService.load(TEST_CUSTOMER1.getCustomerId());
-
-        assertThat(updatedCustomer.getActive()).isNotNull();
-        assertThat(updatedCustomer.getActive()).isTrue();
+        retrievedCustomer = customerRepository.findById(TEST_CUSTOMER1.getCustomerId()).orElse(null);
+        assertThat(retrievedCustomer.getActive()).isTrue();
     }
 
     @Test
@@ -80,7 +80,6 @@ public class CustomerServiceComponentTest extends ComponentTest {
         customerService.insert(TEST_CUSTOMER2);
 
         List<Customer> customers = customerService.getAll();
-
         assertThat(customers).isNotNull();
         assertThat(customers).isNotEmpty();
         assertThat(customers.size()).isEqualTo(2);
@@ -107,6 +106,6 @@ public class CustomerServiceComponentTest extends ComponentTest {
 
     @Test(expected = EntityNotFoundException.class)
     public void loadNonexistentCustomerThrowsException() {
-        Customer customer = customerService.load(CUSTOMER2_ID);
+        customerService.load(CUSTOMER2_ID);
     }
 }

@@ -19,10 +19,14 @@ public class RepositoryUtil {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private OrderRepository orderRepository;
+
     public void cleanDb() {
         categoryRepository.deleteAll();
         costCenterRepository.deleteAll();
         customerRepository.deleteAll();
         productRepository.deleteAll();
+        orderRepository.deleteAll();
     }
 }

@@ -79,7 +79,6 @@ public class CustomerServiceComponentTest extends ComponentTest {
 
         List<Customer> customers = customerService.getAll();
         assertThat(customers).isNotNull();
-        assertThat(customers).isNotEmpty();
         assertThat(customers.size()).isEqualTo(2);
         assertThat(customers.contains(TEST_CUSTOMER1));
         assertThat(customers.contains(TEST_CUSTOMER2));

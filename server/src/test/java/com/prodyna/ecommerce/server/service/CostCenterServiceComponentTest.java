@@ -76,16 +76,6 @@ public class CostCenterServiceComponentTest extends ComponentTest {
         assertThat(retrievedCostCenter.getName()).isEqualTo(COST_CENTER_NAME);
     }
 
-    /* da li ima neki korner kejs za update? da li postoji polje koje ne sme da se updatuje? id?
-    ne svidja mi se sto ovaj test prolazi(ne puca nista)
-     da li moze nekako da se implementira da ne moze da se menja Id kolona?
-    @Test
-    public void updateCostCenterAltersProperEntry2() {
-        costCenterService.insert(TEST_COST_CENTER);
-        TEST_COST_CENTER.setCostCenterId("123");
-        costCenterService.update(TEST_COST_CENTER);
-    }*/
-
     @Test
     public void getAllCostCentersReturnsAllInsertedEntities() {
         costCenterService.insert(TEST_COST_CENTER);
@@ -93,7 +83,6 @@ public class CostCenterServiceComponentTest extends ComponentTest {
 
         List<CostCenter> costCenters = costCenterService.getAll();
         assertThat(costCenters).isNotNull();
-        assertThat(costCenters).isNotEmpty();
         assertThat(costCenters.size()).isEqualTo(2);
         assertThat(costCenters.contains(TEST_COST_CENTER));
         assertThat(costCenters.contains(TEST_COST_CENTER_MUNICH));

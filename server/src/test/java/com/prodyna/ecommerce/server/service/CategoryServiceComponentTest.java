@@ -13,7 +13,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
-import java.util.ServiceLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -71,7 +70,6 @@ public class CategoryServiceComponentTest extends ComponentTest {
 
         List<Category> categories = categoryService.getAll();
         assertThat(categories).isNotNull();
-        assertThat(categories).isNotEmpty();
         assertThat(categories.size()).isEqualTo(2);
         assertThat(categories.contains(TEST_CATEGORY));
         assertThat(categories.contains(TEST_CATEGORY_BELGRADE));

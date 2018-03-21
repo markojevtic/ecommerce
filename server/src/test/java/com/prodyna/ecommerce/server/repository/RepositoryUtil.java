@@ -12,7 +12,11 @@ public class RepositoryUtil {
     @Autowired
     private CostCenterRepository costCenterRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     public void cleanDb() {
+        categoryRepository.deleteAll();
         costCenterRepository.deleteAll();
         customerRepository.deleteAll();
     }

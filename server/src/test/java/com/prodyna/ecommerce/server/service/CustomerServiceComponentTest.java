@@ -44,8 +44,6 @@ public class CustomerServiceComponentTest extends ComponentTest {
     @Autowired
     private CustomerRepository customerRepository;
 
-    // izmeni metode po uzoru na test za costcener. Treba da se oslanjas na mongo repozitorijum a ne na svoj servis
-
     @Test
     public void insertCustomerReturnsProperEntity() {
         customerService.insert(TEST_CUSTOMER1);
@@ -62,7 +60,7 @@ public class CustomerServiceComponentTest extends ComponentTest {
     }
 
     @Test
-    public void updateCustomerReturnsProperEntity() {
+    public void updateCustomerAltersProperEntity() {
         customerService.insert(TEST_CUSTOMER1);
         Customer retrievedCustomer = customerRepository.findById(TEST_CUSTOMER1.getCustomerId()).orElse(null);
         assertThat(retrievedCustomer).isNotNull();

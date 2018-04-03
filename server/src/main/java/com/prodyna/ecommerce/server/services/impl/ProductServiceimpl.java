@@ -26,7 +26,7 @@ public class ProductServiceimpl implements ProductService {
 
     @Override
     public Product load(String id) {
-        final Optional<Product> product = productRepository.findById(id);
+        final Optional<Product> product = this.productRepository.findById(id);
         if(product.isPresent()) {
             return product.get();
         } else throw getProductNotFoundException(id);
@@ -34,21 +34,22 @@ public class ProductServiceimpl implements ProductService {
 
     @Override
     public Product insert(Product product) {
-        return null;
+        return this.productRepository.insert(product);
     }
 
     @Override
     public Product update(Product product) {
-        return null;
+        return this.productRepository.save(product);
     }
 
     @Override
     public void delete(String id) {
-
+        final Product product = load(id);
+        this.productRepository.delete(product);
     }
 
     @Override
     public List<Product> getAll() {
-        return null;
+        return this.productRepository.findAll();
     }
 }

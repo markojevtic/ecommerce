@@ -1,6 +1,5 @@
 package com.prodyna.ecommerce.server.resource;
 
-import com.prodyna.ecommerce.server.exception.EntityNotFoundException;
 import com.prodyna.ecommerce.server.repository.entity.Product;
 import com.prodyna.ecommerce.server.resource.dto.ProductDto;
 import com.prodyna.ecommerce.server.services.ProductService;
@@ -53,12 +52,12 @@ public class ProductResource {
 
     @RequestMapping(method = GET)
     public ResponseEntity<List<ProductDto>> getAll() {
-        List<Product> products = productService.getAll();
+        final List<Product> products = productService.getAll();
 
-        TypeDescriptor typeDscProducts = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(Product.class));
-        TypeDescriptor typeDscProductsDto = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(ProductDto.class));
+        final TypeDescriptor typeDscProducts = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(Product.class));
+        final TypeDescriptor typeDscProductsDto = TypeDescriptor.collection(List.class, TypeDescriptor.valueOf(ProductDto.class));
 
-        List<ProductDto> categoriesDtos = (List<ProductDto>) conversionService.convert(products, typeDscProducts, typeDscProductsDto);
+        final List<ProductDto> categoriesDtos = (List<ProductDto>) conversionService.convert(products, typeDscProducts, typeDscProductsDto);
 
         return ResponseEntity.ok(categoriesDtos);
     }

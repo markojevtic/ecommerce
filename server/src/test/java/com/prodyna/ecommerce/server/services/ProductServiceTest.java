@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -93,6 +94,12 @@ public class ProductServiceTest {
     public void getAllProductsTest() {
         this.productService.insert(TEST_PRODUCT2);
         assertEquals(2, this.productService.getAll().size());
+    }
+
+    @Test
+    public void insertDuplicateProduct() {
+        assertThatThrownBy(() -> this.productService.insert(TEST_PRODUCT1))
+                .isInstanceOf(DuplicateKeyException.class);
     }
 
 }

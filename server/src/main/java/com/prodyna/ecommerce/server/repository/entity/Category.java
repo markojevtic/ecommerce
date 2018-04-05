@@ -12,6 +12,6 @@ import org.springframework.data.annotation.Id;
 @Builder
 public class Category {
     @Id
-    String categoryId;
-    String name;
+    private String categoryId;
+    private String name;
 }

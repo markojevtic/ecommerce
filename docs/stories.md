@@ -35,6 +35,7 @@ Intoduce securiry in our application. In order to do that we need to perform fol
       - user( username, full_name, customer, active, List<Role> ), Role is an ENUM( ADMIN, USER )
       - authorization ( username, password )
    * create all necessary repositories, services, resources
-2. Create custom authorization provider, it should use proper services to load given user, roles by username, and validate password hash.
+2. Create custom authorization provider, it should use proper services to load given user, roles by username, and validate password hash. See: DummyAuthentication
 3. Configure access by paths, user with role ADMIN can access all endpoints, user with role USER can access only related endpoints.
+   See: securit-rest: SecurityConfiguration ( you don't need JwtAuthenticationProvider )
   

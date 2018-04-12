@@ -1,21 +1,18 @@
 package com.prodyna.ecommerce.server.services;
 
 import com.prodyna.ecommerce.server.repository.entity.Product;
-import com.prodyna.ecommerce.server.resource.dto.ProductDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface ProductService {
 
-    ProductDto load(final String productId);
+    Product load(String id);
 
-    ProductDto insert(final Product product);
+    Product insert(Product product);
 
-    ProductDto update(final Product product);
+    Product update(Product product);
 
-    ProductDto delete(final String productId);
+    void delete(String id);
 
-    List<ProductDto> getAll();
+    List<Product> getAll();
 }

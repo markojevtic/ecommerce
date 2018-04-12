@@ -4,17 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Product {
-
+    @Id
     private String productId;
     private String name;
     private String description;
     private String photoUrl;
-    private String category;
-    private boolean active;
+    private Category category;
+    private Boolean active;
 }

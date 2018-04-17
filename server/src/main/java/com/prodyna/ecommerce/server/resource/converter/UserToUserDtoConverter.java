@@ -10,7 +10,6 @@ public class UserToUserDtoConverter extends ContextAwareConverter implements Con
     public UserDto convert(User user) {
         return UserDto.builder()
                 .username(user.getUsername())
-                .password(user.getPassword())
                 .fullName(user.getFullName())
                 .customer(user.getCustomer())
                 .active(user.isActive())

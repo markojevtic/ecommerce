@@ -16,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 public class UserDto extends ResourceSupport {
     private String username;
-    private String password;
     private String fullName;
     private Customer customer;
     private boolean active;

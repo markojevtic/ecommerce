@@ -15,7 +15,6 @@ import java.util.List;
 public class User {
     @Id
     private String username;
-    private String password;
     private String fullName;
     private Customer customer;
     private boolean active;

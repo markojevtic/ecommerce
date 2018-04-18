@@ -11,7 +11,6 @@ import org.springframework.hateoas.ResourceSupport;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorizationDto extends ResourceSupport {
-    private String authorizationId;
     private String username;
     private String password;
 }

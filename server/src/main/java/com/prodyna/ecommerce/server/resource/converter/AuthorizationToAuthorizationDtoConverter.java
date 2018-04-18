@@ -8,7 +8,6 @@ public class AuthorizationToAuthorizationDtoConverter extends ContextAwareConver
     @Override
     public AuthorizationDto convert(Authorization authorization) {
         return AuthorizationDto.builder()
-                .authorizationId(authorization.getAuthorizationId())
                 .username(authorization.getUsername())
                 .password(authorization.getPassword())
                 .build();

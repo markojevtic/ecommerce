@@ -12,7 +12,6 @@ import org.springframework.data.annotation.Id;
 @Builder
 public class Authorization {
     @Id
-    private String authorizationId;
     private String username;
     private String password;
 }

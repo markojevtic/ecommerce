@@ -5,7 +5,7 @@ import com.prodyna.ecommerce.server.repository.entity.User;
 import java.util.List;
 
 public interface UserService {
-    User load(String id);
+    User load(String username);
 
     List<User> getAll();
 
@@ -13,5 +13,5 @@ public interface UserService {
 
     User update(User user);
 
-    void delete(String id);
+    void delete(String username);
 }

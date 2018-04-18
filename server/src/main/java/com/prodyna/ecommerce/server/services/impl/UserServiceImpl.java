@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Override
-    public User load(String id) {
+    public User load(String username) {
         return null;
     }
 
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(String username) {
 
     }
 }

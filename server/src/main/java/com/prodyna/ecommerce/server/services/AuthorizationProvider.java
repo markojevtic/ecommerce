@@ -9,11 +9,13 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class AuthorizationProvider implements AuthenticationProvider {
 
@@ -34,10 +36,12 @@ public class AuthorizationProvider implements AuthenticationProvider {
             List<Role> userRoles = user.getRoles();
             Authorization authorization = authorizationService.load(user.getUsername());
             String password = authorization.getPassword();
+            List<GrantedAuthority> grantedAuthorities = userRoles.stream()
+                    .map(role -> new SimpleGrantedAuthority(role.name()))
+                    .collect(Collectors.toList());
 
             if (user.isActive() && providedPassword.equals(password)) {
-                return new UsernamePasswordAuthenticationToken(providedUsername, providedPassword,
-                        Collections.singleton(new SimpleGrantedAuthority(userRoles.toString())));
+                return new UsernamePasswordAuthenticationToken(providedUsername, providedPassword, grantedAuthorities);
 
             } else throw new BadCredentialsException("Invalid username or Password");
 

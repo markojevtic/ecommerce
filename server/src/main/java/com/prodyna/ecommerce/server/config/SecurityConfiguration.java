@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import static org.springframework.http.HttpMethod.GET;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity( securedEnabled = true, prePostEnabled = true )
@@ -25,12 +27,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.httpBasic()
-                .and()
+        httpSecurity
                 .authorizeRequests()
-                .antMatchers("/**")
-                .hasRole(Role.ADMIN.name())
-                .antMatchers("/authorizations/load")
-                .hasRole(Role.USER.name());
+                    .antMatchers("/**")
+                    .hasRole(Role.ADMIN.name())
+                    .and()
+                .authorizeRequests()
+                    .antMatchers("/**/**")
+                    .hasRole(Role.USER.name())
+                    .antMatchers(GET);
+
     }
 }

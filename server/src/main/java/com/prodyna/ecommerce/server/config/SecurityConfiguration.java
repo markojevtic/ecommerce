@@ -38,8 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/**/**")
                     .hasRole(Role.USER.name())
-                    .antMatchers(GET);
-
+                    .antMatchers(GET)
+                    .permitAll();
     }
 
     @Bean

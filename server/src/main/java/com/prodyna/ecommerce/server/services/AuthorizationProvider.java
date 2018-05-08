@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,10 +27,13 @@ public class AuthorizationProvider implements AuthenticationProvider {
     @Autowired
     AuthorizationService authorizationService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String providedUsername = (String) authentication.getPrincipal();
-        String providedPassword = (String) authentication.getCredentials();
+        String providedPassword = passwordEncoder.encode(authentication.getCredentials().toString());
         Optional<User> optionalUser = Optional.ofNullable(userService.load(providedUsername));
 
         if (optionalUser.isPresent()) {

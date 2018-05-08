@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,9 @@ public class AuthorizationResource {
     @Autowired
     private ConversionService conversionService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public static final ControllerLinkBuilder createResourceLink() {
         return linkTo(AuthorizationResource.class);
     }
@@ -46,6 +50,7 @@ public class AuthorizationResource {
 
     @RequestMapping(method = POST)
     public ResponseEntity<AuthorizationDto> insert(@RequestBody AuthorizationDto authorizationDto) {
+        authorizationDto.setPassword(passwordEncoder.encode(authorizationDto.getPassword()));
         Authorization authorization = conversionService.convert(authorizationDto, Authorization.class);
         Authorization insertedAuthorization = authorizationService.insert(authorization);
 
